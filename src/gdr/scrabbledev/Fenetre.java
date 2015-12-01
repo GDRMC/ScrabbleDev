@@ -8,13 +8,10 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.ArrayList;
 import java.io.*; // Pour pouvoir utiliser les fichiers
-import java.net.URI;
 
 import java.net.URISyntaxException;
 import java.net.URLDecoder;
 import java.security.CodeSource;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Fenetre extends JFrame implements ActionListener {
 
@@ -43,11 +40,19 @@ public class Fenetre extends JFrame implements ActionListener {
     private int score = 0;
     private int result;
     private boolean Probleme;
-
+    
+    //permet d'afficher des popups avec la fenètre principale comme parent
     private JOptionPane popup;
     
 // CONSTRUCTEUR 
-    public Fenetre(String titre, int largeur, int hauteur) {
+
+    /**
+     * Génère la fenètre de rendu avec son sitre, une hauteur et une largeur de dessin
+     * @param titre Titre de la fenètre
+     * @param largeur Largeur de la zone de dessin
+     * @param hauteur Hauteur de la zone de dessin
+     */
+        public Fenetre(String titre, int largeur, int hauteur) {
         super(titre);
         // placer ici l'initialisation de vos structures de donn�es ------------------------------        
         NbMots = 0;
@@ -78,7 +83,13 @@ public class Fenetre extends JFrame implements ActionListener {
     }
 
 // ASSEMBLAGE PARTIES FENETRE : la fenetre est constitu�e de trois parties Panel Nord : boutons ; Sud : boutons; Centre: zone de zoneDessin
-    public void mise_en_page(int maxX, int maxY) {
+
+    /**
+     * Mise en page de la zone de dessin
+     * @param maxX Maximum axe X
+     * @param maxY Maximum axe Y
+     */
+        public void mise_en_page(int maxX, int maxY) {
         //--------------------------------------------------------------------
         // insertion boutons du haut
         this.p1 = new JPanel(new GridLayout());
@@ -162,22 +173,39 @@ public class Fenetre extends JFrame implements ActionListener {
         }
     }
 
+    /**
+     *
+     */
     public void elagueParScore() {
 
     }
 
+    /**
+     *
+     */
     public void elagueParLongueur() {
         ArrayList Terminal = new ArrayList();
 
         Possibilites = Terminal;
     }
 
+    /**
+     * Recherche de solutions dans l'arbre entré en paramètre
+     * @param lj 
+     * @param A
+     */
     public void RechercheSolutions(String lj, ArbreBR A) {
         if (!lj.equals("")) {
 
         }
     }
 
+    /**
+     * 
+     * @param rech
+     * @param A
+     * @return
+     */
     public boolean ScrabblePossible(String rech, ArbreBR A) {
         if (!rech.equals("")) {
 
@@ -187,6 +215,11 @@ public class Fenetre extends JFrame implements ActionListener {
         }
     }
 
+    /**
+     *
+     * @param a
+     * @return
+     */
     public boolean estDans(char a) {
         for (int i = 0; i < proposition.length(); i++) {
             if (proposition.charAt(i) == a) {
@@ -196,6 +229,9 @@ public class Fenetre extends JFrame implements ActionListener {
         return false;
     }
 
+    /**
+     * Génère un tirage aléatoire
+     */
     public void TirageAleaLettres() {
 
         LettresJoueur = "";
@@ -273,6 +309,13 @@ public class Fenetre extends JFrame implements ActionListener {
         repaint();
     }
 
+    /**
+     *
+     * @param s
+     * @param x
+     * @param y
+     * @param g
+     */
     public void AffichePions(String s, int x, int y, Graphics g) {
         String NomImg = "";
         Image im;
@@ -296,6 +339,12 @@ public class Fenetre extends JFrame implements ActionListener {
         }
     }
 
+    /**
+     *
+     * @param x
+     * @param y
+     * @param g
+     */
     public void AffichePoints(int x, int y, Graphics g) {
         char c = 'A';
         for (int i = 0; i < Points.size(); i++) {
@@ -308,6 +357,11 @@ public class Fenetre extends JFrame implements ActionListener {
 
     }
 
+    /**
+     *
+     * @param s
+     * @return
+     */
     public int CalculScore(String s) {
         s = s.toUpperCase();
         int somme = 0;
@@ -326,6 +380,9 @@ public class Fenetre extends JFrame implements ActionListener {
         return min + (int) (Math.random() * (max - min + 1));
     }
 
+    /**
+     *
+     */
     public void ChargementPoints() {
         char Lettre;
         int p;
@@ -350,6 +407,9 @@ public class Fenetre extends JFrame implements ActionListener {
         }
     }
 
+    /**
+     *
+     */
     public void ChargementSac() {
         char Lettre;
         int p;
@@ -373,6 +433,9 @@ public class Fenetre extends JFrame implements ActionListener {
         }
     }
 
+    /**
+     *
+     */
     public void ChargementDico() {
         String Mot;
         try {
@@ -413,7 +476,12 @@ public class Fenetre extends JFrame implements ActionListener {
     }
 
     //UTILISATEURS DE NETBEANS UNIQUEMENT
-    public String getApplicationRootDirectory() {
+
+    /**
+     *
+     * @return
+     */
+        public String getApplicationRootDirectory() {
         String jarDir = "";
         try {
             CodeSource src = Fenetre.class.getProtectionDomain().getCodeSource();
@@ -427,6 +495,11 @@ public class Fenetre extends JFrame implements ActionListener {
         return jarDir;
     }
     
+    /**
+     *
+     * @param str
+     * @param i
+     */
     public void displayPopup(String str, int i){
         switch(i){
             case 0:
