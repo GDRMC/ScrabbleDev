@@ -5,7 +5,6 @@ package gdr.scrabbledev;
  * @author USER
  */
 public class Test {
-
     /**
      * Méthode de démarrage du programme
      * @param args
@@ -14,5 +13,4 @@ public class Test {
         //titre, largeurpanel, hauteurpanel
         Fenetre maFenetre = new Fenetre("Jeu Scrabble", 800, 500);
     }
-
 }

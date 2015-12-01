@@ -40,19 +40,20 @@ public class Fenetre extends JFrame implements ActionListener {
     private int score = 0;
     private int result;
     private boolean Probleme;
-    
+
     //permet d'afficher des popups avec la fenètre principale comme parent
     private JOptionPane popup;
-    
-// CONSTRUCTEUR 
 
+// CONSTRUCTEUR 
     /**
-     * Génère la fenètre de rendu avec son sitre, une hauteur et une largeur de dessin
+     * Génère la fenètre de rendu avec son sitre, une hauteur et une largeur de
+     * dessin
+     *
      * @param titre Titre de la fenètre
      * @param largeur Largeur de la zone de dessin
      * @param hauteur Hauteur de la zone de dessin
      */
-        public Fenetre(String titre, int largeur, int hauteur) {
+    public Fenetre(String titre, int largeur, int hauteur) {
         super(titre);
         // placer ici l'initialisation de vos structures de donn�es ------------------------------        
         NbMots = 0;
@@ -61,9 +62,9 @@ public class Fenetre extends JFrame implements ActionListener {
         Sac = new LinkedList();
         Possibilites = new ArrayList();
         MotPossible = false;
-        
+
         popup = new JOptionPane();
-        
+
         ChargementPoints();
         ChargementDico();
         ChargementSac();
@@ -71,7 +72,7 @@ public class Fenetre extends JFrame implements ActionListener {
         TirageAleaLettres();
 
    		//Equilibrage ici ?
-         //----------------------------------------------------------------------------------------
+        //----------------------------------------------------------------------------------------
         // Construction de la fen�tre
         getContentPane().setLayout(new BorderLayout());
         setResizable(false);
@@ -83,13 +84,13 @@ public class Fenetre extends JFrame implements ActionListener {
     }
 
 // ASSEMBLAGE PARTIES FENETRE : la fenetre est constitu�e de trois parties Panel Nord : boutons ; Sud : boutons; Centre: zone de zoneDessin
-
     /**
      * Mise en page de la zone de dessin
+     *
      * @param maxX Maximum axe X
      * @param maxY Maximum axe Y
      */
-        public void mise_en_page(int maxX, int maxY) {
+    public void mise_en_page(int maxX, int maxY) {
         //--------------------------------------------------------------------
         // insertion boutons du haut
         this.p1 = new JPanel(new GridLayout());
@@ -120,6 +121,12 @@ public class Fenetre extends JFrame implements ActionListener {
 
         //--------------------------------------------------------------------
         pack();
+
+        //Modifie la taille de la fenètre et son point d'ancrage de démarrage sur l'écran
+        this.setSize(1200, 700);
+        this.setLocationRelativeTo(null);
+        ////
+
         setVisible(true);
     }
 
@@ -142,8 +149,8 @@ public class Fenetre extends JFrame implements ActionListener {
             //g.drawImage(im, 0, 0, 150,235, this);  // l'affiche
             g.setFont(StyleLesTitres);
             AffichePions("Jeu du scrabble", 300, 70, g);
-            g.drawString("Nb mots dans dico :" + NbMots, 1000, 70);		// le titre
-            g.drawString("Nb lettres dans le sac : " + Sac.size(), 1000, 90);
+            g.drawString("Nb mots dans dico :" + NbMots, 800, 70);		// le titre
+            g.drawString("Nb lettres dans le sac : " + Sac.size(), 800, 90);
             //AffichePoints(1000,130,g);
             g.drawString("Le score du joueur est : " + score, 150, 150);
             g.drawString("Lettres du joueur :", 150, 190);
@@ -164,10 +171,10 @@ public class Fenetre extends JFrame implements ActionListener {
 
             // affiche si le mot propos� existe
             if (MotPossible) {
-                g.drawString("Ce mot est dans le dictionnaire", 700, 270);
+                g.drawString("Ce mot est dans le dictionnaire", 600, 270);
             }
             if (!PossibleAvecTirage) {
-                g.drawString("Ce mot ne peut pas �tre construit avec le tirage", 700, 320);
+                g.drawString("Ce mot ne peut pas �tre construit avec le tirage", 600, 320);
             }
 
         }
@@ -191,7 +198,8 @@ public class Fenetre extends JFrame implements ActionListener {
 
     /**
      * Recherche de solutions dans l'arbre entré en paramètre
-     * @param lj 
+     *
+     * @param lj
      * @param A
      */
     public void RechercheSolutions(String lj, ArbreBR A) {
@@ -201,7 +209,7 @@ public class Fenetre extends JFrame implements ActionListener {
     }
 
     /**
-     * 
+     *
      * @param rech
      * @param A
      * @return
@@ -319,8 +327,8 @@ public class Fenetre extends JFrame implements ActionListener {
     public void AffichePions(String s, int x, int y, Graphics g) {
         String NomImg = "";
         Image im;
-        String path = 
-        s = s.toUpperCase();
+        String path
+                = s = s.toUpperCase();
         //System.out.println(ClassLoader.);
         for (int i = 0; i < s.length(); i++) {
             if (s.charAt(i) >= 'A' && s.charAt(i) <= 'Z') {
@@ -417,7 +425,7 @@ public class Fenetre extends JFrame implements ActionListener {
         try {
             //FileReader fic = new FileReader("sac.txt");
             FileReader fic = this.getResource("sac.txt");
-            
+
             StreamTokenizer entree = new StreamTokenizer(fic); // on ouvre un stream 	
             entree.quoteChar('"');
             int i = 0;
@@ -460,28 +468,27 @@ public class Fenetre extends JFrame implements ActionListener {
         }
 
     }
-    
+
     //UTILISATEURS DE NETBEANS UNIQUEMENT
-    private FileReader getResource(String filename) throws Exception{
-        String file = "/res/"+filename;
-        String url = this.getApplicationRootDirectory()+file;
-        this.displayPopup("Fichier chargé\nClasspath: "+this.getApplicationRootDirectory()+"\nFile: "+file,1);
+    private FileReader getResource(String filename) throws Exception {
+        String file = "/res/" + filename;
+        String url = this.getApplicationRootDirectory() + file;
+        this.displayPopup("Fichier chargé\nClasspath: " + this.getApplicationRootDirectory() + "\nFile: " + file, 1);
         return new FileReader(url);
     }
-    
-    private File getImage(String filename) throws Exception{
-        String file = "/res/"+filename;
+
+    private File getImage(String filename) throws Exception {
+        String file = "/res/" + filename;
         CodeSource src = Fenetre.class.getProtectionDomain().getCodeSource();
-        return new File(URLDecoder.decode(src.getLocation().toURI().getPath()+file, "UTF-8"));
+        return new File(URLDecoder.decode(src.getLocation().toURI().getPath() + file, "UTF-8"));
     }
 
     //UTILISATEURS DE NETBEANS UNIQUEMENT
-
     /**
      *
      * @return
      */
-        public String getApplicationRootDirectory() {
+    public String getApplicationRootDirectory() {
         String jarDir = "";
         try {
             CodeSource src = Fenetre.class.getProtectionDomain().getCodeSource();
@@ -494,14 +501,14 @@ public class Fenetre extends JFrame implements ActionListener {
         }
         return jarDir;
     }
-    
+
     /**
      *
      * @param str
      * @param i
      */
-    public void displayPopup(String str, int i){
-        switch(i){
+    public void displayPopup(String str, int i) {
+        switch (i) {
             case 0:
                 JOptionPane.showMessageDialog(this, str, "Attention !", JOptionPane.WARNING_MESSAGE);
                 break;
