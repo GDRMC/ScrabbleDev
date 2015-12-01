@@ -1,5 +1,9 @@
 package gdr.scrabbledev;
 
+/**
+ *
+ * @author USER
+ */
 public class Mot {
 
     private String LeMot;
@@ -8,15 +12,32 @@ public class Mot {
         this.LeMot = UnMot;
     }
 
+    /**
+     * Renvoie le mot sous forme de chaine de caractères
+     *
+     * @return Chaine de caractère du mot
+     */
     public String getMot() {
         return this.LeMot;
     }
 
     // Comparaisons
+    /**
+     * Compare deux mots
+     *
+     * @param n Mot à comparer
+     * @return Egalité des mots (true ou false)
+     */
     public boolean equals(Mot n) {
         return n.getMot().equalsIgnoreCase(this.getMot());
     }
 
+    /**
+     * Compare le nombre de lettres identiques dans deux mots à comparer
+     *
+     * @param n Mot à comparer
+     * @return Nombre de lettres en commun dans les deux mots
+     */
     public int compareTo(Mot n) {
         return (this.getMot().compareTo(n.getMot()));
     }
@@ -37,15 +58,12 @@ public class Mot {
     }
 
     private boolean lettrePresente(char c, String s) {
-        int j = 0;
-        boolean present = false;
-        while (j < s.length() && !present) {
-            if (s.charAt(j) == c) {
-                present = true;
-            }
-            j++;
+        int i = 0;
+        boolean ok = false;
+        while (i < s.length() && !ok && (s.charAt(i) != c)) {
+            i++;
         }
-        return present;
+        return (i < s.length());
     }
 
     // mot gagnant si les lettreJoueur sont inclues dans le motDico.
@@ -61,7 +79,26 @@ public class Mot {
         return present;
     }
 
-    public boolean MotOK(String s) {
-        return false;
+    /**
+     * Validation du mot
+     *
+     * @param s Mot
+     * @return Etat de validation du mot
+     */
+    public boolean MotOk(String s) {
+        if (this.LettresPresentes(s)) {
+            boolean ok = true;
+            int i = 0;
+            while (i < this.getMot().length() && ok) {
+                char c = this.getMot().charAt(i);
+                if (NbLettre(c, this.getMot()) > NbLettre(c, s)) {
+                    ok = false;
+                }
+                i++;
+            }
+            return ok;
+        } else {
+            return false;
+        }
     }
 }
